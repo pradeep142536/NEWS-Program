@@ -153,12 +153,11 @@ class FeedAndVerificationTests(unittest.TestCase):
         body = f"<rss><channel>{items}</channel></rss>".encode()
         self.assertEqual(len(parse_feed(body, make_source())), 100)
 
-    def test_registry_disables_unchecked_official_sites(self):
+    def test_registry_contains_news_publishers_only(self):
         sources = load_sources(ROOT / "sources.json")
-        self.assertTrue(any(s.id == "pib-press-releases" and not s.enabled and s.feed_url for s in sources))
-        self.assertTrue(any(s.id == "nasa-news-releases" and s.enabled for s in sources))
-        self.assertTrue(any(s.id == "openai-news" and s.enabled for s in sources))
-        self.assertTrue(any(s.id == "india-isro" and not s.enabled and not s.feed_url for s in sources))
+        expected_ids = {"techcrunch-discovery", "the-verge-ai", "bbc-technology", "bbc-education"}
+        self.assertEqual({s.id for s in sources}, expected_ids)
+        self.assertTrue(all(s.enabled and s.feed_url for s in sources))
 
     def test_robots_disallow_is_respected(self):
         import intelligence_bot.net as net
@@ -465,14 +464,14 @@ class IntegrationBehaviorTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(self.service.db.publication_counts().get("pending"), 1)
 
     async def test_background_worker_scans_and_publishes_without_commands(self):
-        source = next(s for s in self.service.sources if s.id == "nasa-news-releases")
+        source = next(s for s in self.service.sources if s.id == "the-verge-ai")
         self.service.sources = [source]
         self.service.db.source_succeeded(source.id, None, None)
         self.service.db.source_channel_baseline_completed(source.id)
         self.service.db.set_monitoring_enabled(True)
-        item = FeedItem(source.id, source.publisher, "New engineering research result", "https://www.nasa.gov/new-research", "NASA describes a useful new engineering research result with practical science details.")
+        item = FeedItem(source.id, source.publisher, "New engineering research result", "https://www.theverge.com/ai-artificial-intelligence/new-research", "A news report describes a useful new engineering research result with practical science details.")
 
-        def fake_candidate(feed_item, configured_source, topics=(), max_bytes=0):
+        def fake_candidate(feed_item, configured_source, topics=(), max_bytes=0, evidence_sources=()):
             return Verification("official_primary_page", feed_item.url, "Official evidence. " * 12), Classification(True, "science_technology", 7, ("official primary source",))
 
         class FakeTelegram:
@@ -502,11 +501,11 @@ class IntegrationBehaviorTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_newly_discovered_items_are_queued_and_duplicates_suppressed(self):
         self.service.db.set_monitoring_enabled(True)
-        source = next(s for s in self.service.sources if s.id == "pib-press-releases")
-        first = FeedItem(source.id, source.publisher, "Government science update", "https://pib.gov.in/new-1", "Official engineering technology update.")
-        additional = FeedItem(source.id, source.publisher, "Government science update 2", "https://pib.gov.in/new-2", "Official engineering technology update.")
+        source = next(s for s in self.service.sources if s.id == "the-verge-ai")
+        first = FeedItem(source.id, source.publisher, "Science and technology update", "https://www.theverge.com/ai-artificial-intelligence/new-1", "A news report covers a useful engineering technology update.")
+        additional = FeedItem(source.id, source.publisher, "Science and technology update 2", "https://www.theverge.com/ai-artificial-intelligence/new-2", "A news report covers a useful engineering technology update.")
 
-        def fake_candidate(item, source, topics=(), max_bytes=0):
+        def fake_candidate(item, source, topics=(), max_bytes=0, evidence_sources=()):
             return Verification("official_primary_page", item.url, "Official page evidence. " * 10), Classification(True, "science_technology", 7, ("official source",))
 
         with patch("intelligence_bot.service.retrieve_feed", return_value=FeedResult([first], None, None)), patch("intelligence_bot.service.candidate_for", side_effect=fake_candidate):
@@ -521,10 +520,10 @@ class IntegrationBehaviorTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(self.service.db.publication_counts().get("pending"), 1)
 
     async def test_legacy_initialized_source_gets_a_fresh_channel_baseline(self):
-        source = next(s for s in self.service.sources if s.id == "pib-press-releases")
+        source = next(s for s in self.service.sources if s.id == "the-verge-ai")
         self.service.db.source_succeeded(source.id, "legacy-etag", "legacy-modified")
         self.service.db.set_monitoring_enabled(True)
-        old_item = FeedItem(source.id, source.publisher, "Government science update", "https://pib.gov.in/old", "Official engineering technology update.")
+        old_item = FeedItem(source.id, source.publisher, "Science and technology update", "https://www.theverge.com/ai-artificial-intelligence/old", "A news report covers a useful engineering technology update.")
         with patch("intelligence_bot.service.retrieve_feed", return_value=FeedResult([old_item], "fresh-etag", "fresh-modified")) as retrieve:
             new_count, queued_count, baseline_count = await self.service._scan_source(source)
         self.assertEqual(retrieve.call_args.args[1:3], (None, None))
@@ -592,12 +591,12 @@ class IntegrationBehaviorTests(unittest.IsolatedAsyncioTestCase):
             await self.service.verify_destination()
 
     async def test_image_attached_when_valid_image_is_available(self):
-        source = next(s for s in self.service.sources if s.id == "pib-press-releases")
+        source = next(s for s in self.service.sources if s.id == "the-verge-ai")
         self.service.db.sync_sources([replace(source, images_allowed=True)])
         self.service.db.set_monitoring_enabled(True)
-        candidate = make_candidate("https://pib.gov.in/photo", "Government technology notice")
+        candidate = make_candidate("https://www.theverge.com/ai-artificial-intelligence/photo", "Technology news report")
         # Store a permitted official source and image URL for the delivery path.
-        item = FeedItem(source.id, source.publisher, candidate.item.title, candidate.item.url, candidate.item.summary, image_url="https://pib.gov.in/image.jpg")
+        item = FeedItem(source.id, source.publisher, candidate.item.title, candidate.item.url, candidate.item.summary, image_url="https://www.theverge.com/image.jpg")
         candidate = Candidate(item, Verification("official_primary_page", item.url, "Official page evidence. " * 10, image_url=item.image_url), candidate.classification)
         story_id, _, _ = self.service.db.save_candidate(candidate)
         self.service.db.queue_publication(story_id, -1001234567890)
@@ -616,11 +615,11 @@ class IntegrationBehaviorTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(fake.messages, 0)
 
     async def test_invalid_or_missing_image_falls_back_to_text(self):
-        source = next(s for s in self.service.sources if s.id == "pib-press-releases")
+        source = next(s for s in self.service.sources if s.id == "the-verge-ai")
         self.service.db.sync_sources([replace(source, images_allowed=True)])
         self.service.db.set_monitoring_enabled(True)
-        candidate = make_candidate("https://pib.gov.in/text-only", "Government technology notice")
-        item = FeedItem(source.id, source.publisher, candidate.item.title, candidate.item.url, candidate.item.summary, image_url="https://pib.gov.in/bad.jpg")
+        candidate = make_candidate("https://www.theverge.com/ai-artificial-intelligence/text-only", "Technology news report")
+        item = FeedItem(source.id, source.publisher, candidate.item.title, candidate.item.url, candidate.item.summary, image_url="https://www.theverge.com/bad.jpg")
         candidate = Candidate(item, Verification("official_primary_page", item.url, "Official page evidence. " * 10, image_url=item.image_url), candidate.classification)
         story_id, _, _ = self.service.db.save_candidate(candidate)
         self.service.db.queue_publication(story_id, -1001234567890)
@@ -638,10 +637,10 @@ class IntegrationBehaviorTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(fake.messages, 1)
 
     async def test_unknown_image_rights_default_to_text_only(self):
-        source = next(s for s in self.service.sources if s.id == "nasa-news-releases")
+        source = next(s for s in self.service.sources if s.id == "the-verge-ai")
         self.assertFalse(source.images_allowed)
         self.service.db.set_monitoring_enabled(True)
-        item = FeedItem(source.id, source.publisher, "Science technology notice", "https://www.nasa.gov/text-only", "Official technical announcement.", image_url="https://www.nasa.gov/image.jpg")
+        item = FeedItem(source.id, source.publisher, "Science technology news report", "https://www.theverge.com/ai-artificial-intelligence/text-only", "A technology publisher reports on a science and engineering development.", image_url="https://www.theverge.com/image.jpg")
         candidate = Candidate(item, Verification("official_primary_page", item.url, "Official page evidence. " * 10, image_url=item.image_url), Classification(True, "science_technology", 6, ("primary",)))
         story_id, _, _ = self.service.db.save_candidate(candidate)
         self.service.db.queue_publication(story_id, -1001234567890)
@@ -661,7 +660,7 @@ class IntegrationBehaviorTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(fake.photos, 0)
 
     async def test_rate_limit_retry_remains_persisted(self):
-        source = next(s for s in self.service.sources if s.id == "pib-press-releases")
+        source = next(s for s in self.service.sources if s.id == "the-verge-ai")
         self.service.db.set_monitoring_enabled(True)
         story_id, _, _ = self.service.db.save_candidate(make_candidate("https://pib.gov.in/429", "Government technology notice"))
         self.service.db.queue_publication(story_id, -1001234567890)
