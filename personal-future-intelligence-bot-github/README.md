@@ -42,6 +42,17 @@ Use `.Stop-NewsPublisher.ps1` to stop the background publisher. Keep only one ru
 
 The `deploy/future-intelligence-bot.service` file is a systemd template. Review its paths and service account before installing. Store secrets in a private environment file outside the repository (the template expects `/etc/future-bot.env`). Set `BOT_DATABASE` to a persistent writable path, such as `/var/lib/future-bot/intelligence.sqlite3`, and make sure the service account can write there.
 
+## Deploy as a Render Web Service
+
+This project can expose a minimal health endpoint on the `PORT` supplied by Render while the news publisher runs. Configure the service with:
+
+- Root Directory: `personal-future-intelligence-bot-github`
+- Build Command: `echo "No third-party packages"`
+- Start Command: `python bot.py --enable-monitoring && python bot.py`
+- Uptime monitor URL: `https://YOUR-RENDER-SERVICE.onrender.com/health`
+
+The `/health` response only confirms the process is responding; check Render logs for feed scans and publishing. Free Render services use ephemeral storage, so SQLite state can be lost when Render restarts or spins down the service. Use persistent storage if you need durable checkpoints and queue recovery.
+
 ## Safe checks
 
 ```text
