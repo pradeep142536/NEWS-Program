@@ -1,0 +1,645 @@
+{
+  "sources": [
+    {
+      "id": "pib-press-releases",
+      "publisher": "Press Information Bureau, Government of India",
+      "domain": "pib.gov.in",
+      "trusted_domains": [
+        "pib.gov.in",
+        "static.pib.gov.in"
+      ],
+      "feed_url": "https://pib.gov.in/RssMain.aspx?ModId=6&Lang=1&Regid=1",
+      "access_method": "official_rss",
+      "topics": [
+        "government",
+        "opportunities",
+        "science",
+        "technology"
+      ],
+      "categories": [
+        "government",
+        "money",
+        "science_technology"
+      ],
+      "interval_seconds": 900,
+      "enabled": false,
+      "notes": "Official RSS endpoint returned HTTP 403 from the build environment; retry only from an authorized network, do not bypass the denial."
+    },
+    {
+      "id": "nasa-news-releases",
+      "publisher": "NASA",
+      "domain": "nasa.gov",
+      "trusted_domains": [
+        "nasa.gov",
+        "images-assets.nasa.gov"
+      ],
+      "feed_url": "https://www.nasa.gov/news-release/feed/",
+      "access_method": "official_rss",
+      "topics": [
+        "space",
+        "science",
+        "technology"
+      ],
+      "categories": [
+        "science_technology"
+      ],
+      "interval_seconds": 900,
+      "enabled": true
+    },
+    {
+      "id": "nasa-jpl-news",
+      "publisher": "NASA Jet Propulsion Laboratory",
+      "domain": "jpl.nasa.gov",
+      "trusted_domains": [
+        "jpl.nasa.gov",
+        "images-assets.nasa.gov"
+      ],
+      "feed_url": "https://www.jpl.nasa.gov/feeds/news/",
+      "access_method": "official_rss",
+      "topics": [
+        "space",
+        "robotics",
+        "engineering",
+        "science"
+      ],
+      "categories": [
+        "science_technology",
+        "students"
+      ],
+      "interval_seconds": 1200,
+      "enabled": false,
+      "notes": "Official RSS endpoint returned HTTP 403 from the build environment; retry only from an authorized network, do not bypass the denial."
+    },
+    {
+      "id": "openai-news",
+      "publisher": "OpenAI News",
+      "domain": "openai.com",
+      "trusted_domains": [
+        "openai.com"
+      ],
+      "feed_url": "https://openai.com/news/rss.xml",
+      "access_method": "official_rss_linked_from_news_page",
+      "topics": [
+        "AI",
+        "developer tools",
+        "research",
+        "product releases"
+      ],
+      "categories": [
+        "ai",
+        "science_technology"
+      ],
+      "interval_seconds": 900,
+      "enabled": true
+    },
+    {
+      "id": "india-scholarships",
+      "publisher": "National Scholarship Portal, Government of India",
+      "domain": "scholarships.gov.in",
+      "trusted_domains": [
+        "scholarships.gov.in"
+      ],
+      "feed_url": null,
+      "access_method": "official_website_unverified_feed",
+      "topics": [
+        "scholarships",
+        "education"
+      ],
+      "categories": [
+        "money",
+        "students",
+        "opportunities"
+      ],
+      "interval_seconds": 3600,
+      "enabled": false
+    },
+    {
+      "id": "india-myscheme",
+      "publisher": "MyScheme, Government of India",
+      "domain": "myscheme.gov.in",
+      "trusted_domains": [
+        "myscheme.gov.in"
+      ],
+      "feed_url": null,
+      "access_method": "official_website_unverified_feed",
+      "topics": [
+        "government schemes",
+        "public benefits"
+      ],
+      "categories": [
+        "money",
+        "government",
+        "opportunities"
+      ],
+      "interval_seconds": 3600,
+      "enabled": false
+    },
+    {
+      "id": "india-isro",
+      "publisher": "Indian Space Research Organisation",
+      "domain": "isro.gov.in",
+      "trusted_domains": [
+        "isro.gov.in"
+      ],
+      "feed_url": null,
+      "access_method": "official_website_unverified_feed",
+      "topics": [
+        "space",
+        "science",
+        "engineering"
+      ],
+      "categories": [
+        "science_technology"
+      ],
+      "interval_seconds": 1800,
+      "enabled": false
+    },
+    {
+      "id": "india-dst",
+      "publisher": "Department of Science and Technology, India",
+      "domain": "dst.gov.in",
+      "trusted_domains": [
+        "dst.gov.in"
+      ],
+      "feed_url": null,
+      "access_method": "official_website_unverified_feed",
+      "topics": [
+        "research funding",
+        "science",
+        "innovation"
+      ],
+      "categories": [
+        "money",
+        "students",
+        "science_technology"
+      ],
+      "interval_seconds": 1800,
+      "enabled": false
+    },
+    {
+      "id": "india-dbt",
+      "publisher": "Department of Biotechnology, India",
+      "domain": "dbtindia.gov.in",
+      "trusted_domains": [
+        "dbtindia.gov.in"
+      ],
+      "feed_url": null,
+      "access_method": "official_website_unverified_feed",
+      "topics": [
+        "biotechnology",
+        "research funding"
+      ],
+      "categories": [
+        "money",
+        "science_technology"
+      ],
+      "interval_seconds": 1800,
+      "enabled": false
+    },
+    {
+      "id": "india-education",
+      "publisher": "Ministry of Education, India",
+      "domain": "education.gov.in",
+      "trusted_domains": [
+        "education.gov.in"
+      ],
+      "feed_url": null,
+      "access_method": "official_website_unverified_feed",
+      "topics": [
+        "education",
+        "student programmes"
+      ],
+      "categories": [
+        "money",
+        "students",
+        "government"
+      ],
+      "interval_seconds": 1800,
+      "enabled": false
+    },
+    {
+      "id": "india-startup",
+      "publisher": "Startup India",
+      "domain": "startupindia.gov.in",
+      "trusted_domains": [
+        "startupindia.gov.in"
+      ],
+      "feed_url": null,
+      "access_method": "official_website_unverified_feed",
+      "topics": [
+        "startup funding",
+        "competitions",
+        "innovation"
+      ],
+      "categories": [
+        "money",
+        "students",
+        "opportunities"
+      ],
+      "interval_seconds": 1800,
+      "enabled": false
+    },
+    {
+      "id": "international-nsf",
+      "publisher": "U.S. National Science Foundation news",
+      "domain": "nsf.gov",
+      "trusted_domains": [
+        "nsf.gov"
+      ],
+      "feed_url": "https://www.nsf.gov/rss/rss_www_news.xml",
+      "access_method": "official_rss",
+      "topics": [
+        "research",
+        "science",
+        "funding"
+      ],
+      "categories": [
+        "science_technology",
+        "government"
+      ],
+      "interval_seconds": 1800,
+      "enabled": true
+    },
+    {
+      "id": "nsf-funding-opportunities",
+      "publisher": "U.S. National Science Foundation funding opportunities",
+      "domain": "nsf.gov",
+      "trusted_domains": [
+        "nsf.gov"
+      ],
+      "feed_url": "https://www.nsf.gov/rss/rss_www_funding_pgm_annc_inf.xml",
+      "access_method": "official_rss",
+      "topics": [
+        "research funding",
+        "grants",
+        "student opportunities"
+      ],
+      "categories": [
+        "money",
+        "students",
+        "government"
+      ],
+      "interval_seconds": 1800,
+      "enabled": true
+    },
+    {
+      "id": "nsf-upcoming-due-dates",
+      "publisher": "U.S. National Science Foundation upcoming due dates",
+      "domain": "nsf.gov",
+      "trusted_domains": [
+        "nsf.gov"
+      ],
+      "feed_url": "https://www.nsf.gov/rss/rss_www_funding_upcoming.xml",
+      "access_method": "official_rss",
+      "topics": [
+        "grant deadlines",
+        "research funding"
+      ],
+      "categories": [
+        "money",
+        "government"
+      ],
+      "interval_seconds": 1800,
+      "enabled": true
+    },
+    {
+      "id": "arxiv-cs-ai",
+      "publisher": "arXiv Computer Science: Artificial Intelligence preprints",
+      "domain": "arxiv.org",
+      "trusted_domains": [
+        "arxiv.org",
+        "export.arxiv.org"
+      ],
+      "feed_url": "https://export.arxiv.org/rss/cs.AI",
+      "access_method": "official_preprint_feed",
+      "topics": [
+        "AI research",
+        "machine learning",
+        "computer science"
+      ],
+      "categories": [
+        "ai",
+        "science_technology"
+      ],
+      "interval_seconds": 1800,
+      "enabled": false,
+      "notes": "Disabled after the live robots.txt check blocked feed access; do not bypass the source policy."
+    },
+    {
+      "id": "hacker-news-discovery",
+      "publisher": "Hacker News community feed (discovery only)",
+      "domain": "hnrss.org",
+      "trusted_domains": [
+        "hnrss.org",
+        "news.ycombinator.com"
+      ],
+      "feed_url": "https://hnrss.org/frontpage",
+      "access_method": "unofficial_discovery_rss",
+      "topics": [
+        "AI",
+        "science",
+        "engineering",
+        "cybersecurity",
+        "developer tools"
+      ],
+      "categories": [
+        "ai",
+        "science_technology",
+        "cybersecurity",
+        "money",
+        "students",
+        "government"
+      ],
+      "interval_seconds": 900,
+      "enabled": false,
+      "trust_level": "discovery_only",
+      "primary_evidence_domains": [
+        "openai.com",
+        "nasa.gov",
+        "nsf.gov",
+        "arxiv.org"
+      ],
+      "notes": "Disabled after the live robots.txt request timed out; retry only after a safe robots check succeeds."
+    },
+    {
+      "id": "international-esa",
+      "publisher": "European Space Agency",
+      "domain": "esa.int",
+      "trusted_domains": [
+        "esa.int"
+      ],
+      "feed_url": null,
+      "access_method": "official_website_unverified_feed",
+      "topics": [
+        "space",
+        "science",
+        "engineering"
+      ],
+      "categories": [
+        "science_technology"
+      ],
+      "interval_seconds": 1800,
+      "enabled": false
+    },
+    {
+      "id": "international-cern",
+      "publisher": "CERN",
+      "domain": "home.cern",
+      "trusted_domains": [
+        "home.cern",
+        "cern.ch"
+      ],
+      "feed_url": null,
+      "access_method": "official_website_unverified_feed",
+      "topics": [
+        "physics",
+        "engineering",
+        "computing"
+      ],
+      "categories": [
+        "science_technology"
+      ],
+      "interval_seconds": 1800,
+      "enabled": false
+    },
+    {
+      "id": "mit-news",
+      "publisher": "MIT News Office",
+      "domain": "news.mit.edu",
+      "trusted_domains": [
+        "news.mit.edu"
+      ],
+      "feed_url": "https://news.mit.edu/rss/feed",
+      "access_method": "official_rss_linked_from_publisher",
+      "topics": [
+        "science",
+        "engineering",
+        "AI",
+        "student opportunities",
+        "education"
+      ],
+      "categories": [
+        "science_technology",
+        "ai",
+        "students",
+        "opportunities"
+      ],
+      "interval_seconds": 1200,
+      "enabled": true,
+      "notes": "Main feed linked from the official MIT News RSS directory; genuine images remain disabled."
+    },
+    {
+      "id": "unesco-unevoc",
+      "publisher": "UNESCO-UNEVOC",
+      "domain": "connect.unevoc.unesco.org",
+      "trusted_domains": [
+        "connect.unevoc.unesco.org",
+        "unevoc.unesco.org"
+      ],
+      "feed_url": "https://connect.unevoc.unesco.org/unevoc_rss.xml",
+      "access_method": "official_rss_linked_from_publisher",
+      "topics": [
+        "technical education",
+        "vocational training",
+        "education",
+        "student opportunities"
+      ],
+      "categories": [
+        "students",
+        "opportunities"
+      ],
+      "interval_seconds": 1800,
+      "enabled": true,
+      "notes": "UNESCO-UNEVOC official news and events feed. Linked PDF items are not published because only HTML original pages are verified."
+    },
+    {
+      "id": "esa-space-news",
+      "publisher": "European Space Agency",
+      "domain": "esa.int",
+      "trusted_domains": [
+        "esa.int"
+      ],
+      "feed_url": "https://www.esa.int/rssfeed/Our_Activities/Space_News",
+      "access_method": "official_rss_linked_from_publisher",
+      "topics": [
+        "space",
+        "science",
+        "engineering",
+        "technology"
+      ],
+      "categories": [
+        "science_technology"
+      ],
+      "interval_seconds": 1800,
+      "enabled": true,
+      "notes": "Topical feed linked from the official ESA RSS directory; genuine images remain disabled."
+    },
+    {
+      "id": "esa-education",
+      "publisher": "European Space Agency",
+      "domain": "esa.int",
+      "trusted_domains": [
+        "esa.int"
+      ],
+      "feed_url": "https://www.esa.int/rssfeed/Education",
+      "access_method": "official_rss_linked_from_publisher",
+      "topics": [
+        "education",
+        "student opportunities",
+        "space"
+      ],
+      "categories": [
+        "students",
+        "science_technology"
+      ],
+      "interval_seconds": 1800,
+      "enabled": true,
+      "notes": "Education feed linked from the official ESA RSS directory; genuine images remain disabled."
+    },
+    {
+      "id": "un-geneva-press-releases",
+      "publisher": "United Nations Office at Geneva",
+      "domain": "www.ungeneva.org",
+      "trusted_domains": [
+        "www.ungeneva.org"
+      ],
+      "feed_url": "https://www.ungeneva.org/news-media/press-releases-list/rss.xml",
+      "access_method": "official_rss_linked_from_publisher",
+      "topics": [
+        "science",
+        "education",
+        "technology",
+        "UN announcements"
+      ],
+      "categories": [
+        "science_technology",
+        "students",
+        "government"
+      ],
+      "interval_seconds": 1800,
+      "enabled": true,
+      "notes": "Official press-release RSS feed linked from the UN Geneva RSS directory."
+    },
+    {
+      "id": "techcrunch-discovery",
+      "publisher": "TechCrunch",
+      "domain": "techcrunch.com",
+      "trusted_domains": [
+        "techcrunch.com"
+      ],
+      "feed_url": "https://techcrunch.com/feed/",
+      "access_method": "unofficial_discovery_rss",
+      "topics": [
+        "AI",
+        "software",
+        "science",
+        "engineering",
+        "cybersecurity",
+        "developer tools"
+      ],
+      "categories": [
+        "ai",
+        "science_technology",
+        "cybersecurity"
+      ],
+      "interval_seconds": 1800,
+      "enabled": true,
+      "trust_level": "reputable_reporting",
+      "primary_evidence_domains": [
+        "nasa.gov",
+        "images-assets.nasa.gov",
+        "openai.com",
+        "nsf.gov",
+        "news.mit.edu",
+        "connect.unevoc.unesco.org",
+        "unevoc.unesco.org",
+        "esa.int",
+        "www.ungeneva.org"
+      ],
+      "notes": "Independent newsroom RSS. Article pages are checked and posts retain TechCrunch attribution and the original link. Financial opportunity claims require a linked, retrievable issuer/official page."
+    },
+    {
+      "id": "the-verge-ai",
+      "publisher": "The Verge — AI",
+      "domain": "theverge.com",
+      "trusted_domains": [
+        "theverge.com",
+        "www.theverge.com"
+      ],
+      "feed_url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+      "access_method": "independent_publisher_rss",
+      "topics": [
+        "AI tools",
+        "AI capabilities",
+        "technology",
+        "software"
+      ],
+      "categories": [
+        "ai",
+        "science_technology",
+        "cybersecurity"
+      ],
+      "interval_seconds": 1200,
+      "enabled": true,
+      "trust_level": "reputable_reporting",
+      "notes": "Publisher RSS endpoint parsed successfully and robots.txt allowed access during setup. Article pages must be retrievable; posts keep The Verge attribution and link. Images remain disabled."
+    },
+    {
+      "id": "bbc-technology",
+      "publisher": "BBC News — Technology",
+      "domain": "bbc.co.uk",
+      "trusted_domains": [
+        "feeds.bbci.co.uk",
+        "bbc.co.uk",
+        "bbc.com"
+      ],
+      "feed_url": "https://feeds.bbci.co.uk/news/technology/rss.xml",
+      "access_method": "independent_publisher_rss",
+      "topics": [
+        "AI",
+        "technology",
+        "cybersecurity",
+        "science"
+      ],
+      "categories": [
+        "ai",
+        "science_technology",
+        "cybersecurity"
+      ],
+      "interval_seconds": 1800,
+      "enabled": true,
+      "trust_level": "reputable_reporting",
+      "notes": "BBC-listed Technology RSS endpoint parsed successfully and robots.txt allowed access during setup. Posts retain BBC attribution and the original article link; no feed images are reused."
+    },
+    {
+      "id": "bbc-education",
+      "publisher": "BBC News — Education",
+      "domain": "bbc.co.uk",
+      "trusted_domains": [
+        "feeds.bbci.co.uk",
+        "bbc.co.uk",
+        "bbc.com"
+      ],
+      "feed_url": "https://feeds.bbci.co.uk/news/education/rss.xml",
+      "access_method": "independent_publisher_rss",
+      "topics": [
+        "education",
+        "students",
+        "scholarships",
+        "research",
+        "career opportunities"
+      ],
+      "categories": [
+        "students",
+        "opportunities",
+        "money",
+        "science_technology",
+        "government"
+      ],
+      "interval_seconds": 1800,
+      "enabled": true,
+      "trust_level": "reputable_reporting",
+      "notes": "BBC-listed Education RSS endpoint parsed successfully and robots.txt allowed access during setup. Posts retain BBC attribution and the original article link. Financial/opportunity claims require a linked, retrievable issuer/official page; no feed images are reused."
+    }
+  ]
+}
