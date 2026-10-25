@@ -7,6 +7,7 @@ from pathlib import Path
 
 from intelligence_bot.config import from_environment
 from intelligence_bot.diagnostics import run_dry_run
+from intelligence_bot.health import start_health_server
 from intelligence_bot.service import check_destination, check_sources, check_telegram, discover_sources, run_service, set_monitoring_state
 
 PROJECT_ROOT = Path(__file__).resolve().parent
@@ -45,7 +46,12 @@ def main() -> int:
         return set_monitoring_state(config, PROJECT_ROOT, False)
     if args.discover_sources:
         return asyncio.run(discover_sources(config, PROJECT_ROOT))
+    # Render Web Services require an HTTP port. On Render, the health server
+    # binds to the platform-provided PORT while the news publisher runs.
+    health_server = start_health_server()
     run_service(config, PROJECT_ROOT)
+    if health_server is not None:
+        health_server.shutdown()
     return 0
 
 
